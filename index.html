@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zomi Center — You Belong Here Regardless</title>
+<meta name="description" content="Zomi Community Center — supporting Zomi people worldwide with community care, language preservation, and belonging.">
+<style>
+:root { --red: #8B1A1A; --gold: #D4A843; --cream: #FFF8F0; --dark: #2C1810; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: system-ui, -apple-system, sans-serif; background: var(--cream); color: var(--dark); line-height: 1.7; }
+nav { background: var(--red); padding: 1rem 2rem; position: sticky; top: 0; z-index: 10; }
+nav a { color: white; text-decoration: none; margin-right: 1.5rem; font-weight: 500; }
+nav a:hover { color: var(--gold); }
+.hero { text-align: center; padding: 6rem 2rem; background: linear-gradient(135deg, var(--red), #5C1010); color: white; }
+.hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+.hero p { font-size: 1.3rem; max-width: 600px; margin: 0 auto; opacity: 0.9; }
+.hero .tagline { font-size: 1.5rem; color: var(--gold); margin-top: 1.5rem; font-style: italic; }
+section { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
+section h2 { color: var(--red); margin-bottom: 1.5rem; font-size: 1.8rem; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; }
+.card { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.card h3 { color: var(--red); margin-bottom: 0.5rem; }
+footer { background: var(--dark); color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+footer a { color: var(--gold); }
+@media (max-width: 600px) { .hero h1 { font-size: 2rem; } nav a { margin-right: 0.8rem; font-size: 0.9rem; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#ai">AI Zomi</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section class="hero" id="home">
+  <h1>Zomi Center</h1>
+  <p>Supporting Zomi people worldwide with dignity, community, and belonging — without strings attached.</p>
+  <div class="tagline">"You belong here regardless."</div>
+</section>
+
+<section id="about">
+  <h2>Our Mission</h2>
+  <p>Zomi Center is a nonprofit community organization built by Zomi people for Zomi people. We exist to make sure no Zomi family carries the burden of burial costs, cultural isolation, or language loss alone.</p>
+  <p>We are not tied to any church, denomination, or political group. You can practice your faith freely — or not — and still belong here.</p>
+</section>
+
+<section id="services">
+  <h2>What We Do</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>Burial Support</h3>
+      <p>Dignified funeral assistance so families can grieve without financial fear. No church membership required.</p>
+    </div>
+    <div class="card">
+      <h3>Community Care</h3>
+      <p>Connect with Zomi people in your city. Find help with translation, legal aid, housing, and daily needs.</p>
+    </div>
+    <div class="card">
+      <h3>Language & Culture</h3>
+      <p>Access the Zomi AI model, Bible datasets, educational materials, and cultural preservation projects.</p>
+    </div>
+  </div>
+</section>
+
+<section id="ai">
+  <h2>Zomi AI</h2>
+  <p>We built the world's first Zomi language AI — a Qwen 3B model fine-tuned on Tedim Bible texts, educational books, and conversational Zomi. It speaks proper Zomi, not mixed dialects.</p>
+  <p>97 downloads on Hugging Face and growing. Free for any Zomi person to use.</p>
+  <p style="margin-top:1rem"><a href="https://huggingface.co/paumkim" style="color:var(--red)">View on Hugging Face →</a></p>
+</section>
+
+<section id="contact">
+  <h2>Get Involved</h2>
+  <p>Whether you need help, want to volunteer, or have resources to share — reach out.</p>
+  <p style="margin-top:1rem">Email: <a href="mailto:hello@zomicenter.org" style="color:var(--red)">hello@zomicenter.org</a></p>
+  <p>We are building this together. One city at a time.</p>
+</section>
+
+<footer>
+  <p>Zomi Center — "You belong here regardless."</p>
+  <p style="margin-top:0.5rem;opacity:0.7">Built with care for the Zomi people worldwide.</p>
+</footer>
+
+</body>
+</html>
