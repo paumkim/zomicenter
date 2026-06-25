@@ -25,6 +25,78 @@ footer { background: var(--dark); color: white; text-align: center; padding: 2re
 footer a { color: var(--gold); }
 footer .built { margin-top: 1rem; font-size: 0.8rem; opacity: 0.5; }
 @media (max-width: 600px) { .hero h1 { font-size: 2rem; } nav a { margin-right: 0.8rem; font-size: 0.9rem; } }
+
+/* Chat Widget */
+.chat-fab {
+  position: fixed; bottom: 24px; right: 24px; z-index: 1000;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: var(--red); color: white; border: none; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3); font-size: 28px;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.3s ease;
+}
+.chat-fab:hover { transform: scale(1.1); }
+.chat-fab.open { transform: rotate(45deg); }
+
+.chat-panel {
+  position: fixed; bottom: 96px; right: 24px; z-index: 999;
+  width: 380px; height: 540px; background: white;
+  border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  display: none; flex-direction: column; overflow: hidden;
+  animation: slideUp 0.3s ease;
+}
+.chat-panel.open { display: flex; }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-header {
+  background: var(--red); color: white; padding: 16px 20px;
+  font-weight: 600; display: flex; align-items: center; gap: 10px;
+}
+.chat-logo {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--gold); display: flex; align-items: center;
+  justify-content: center; font-weight: bold; font-size: 16px;
+  color: var(--dark);
+}
+.chat-messages {
+  flex: 1; overflow-y: auto; padding: 16px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.msg { padding: 10px 14px; border-radius: 12px; max-width: 85%; font-size: 0.9rem; line-height: 1.5; word-break: break-word; }
+.bot { background: #f0f0f0; color: var(--dark); align-self: flex-start; border-bottom-left-radius: 4px; }
+.user { background: var(--red); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+.typing { background: #f0f0f0; color: #999; align-self: flex-start; padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; border-bottom-left-radius: 4px; }
+
+.chat-input-area {
+  padding: 12px 16px; border-top: 1px solid #eee;
+  display: flex; gap: 8px;
+}
+.chat-input {
+  flex: 1; padding: 10px 14px; border: 1px solid #ddd;
+  border-radius: 24px; outline: none; font-size: 0.9rem;
+}
+.chat-input:focus { border-color: var(--red); }
+.chat-send {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--red); color: white; border: none; cursor: pointer;
+  font-size: 18px; display: flex; align-items: center; justify-content: center;
+}
+
+.suggestions {
+  display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 16px;
+}
+.suggestions button {
+  padding: 6px 12px; border-radius: 16px; border: 1px solid var(--red);
+  background: white; color: var(--red); cursor: pointer; font-size: 0.8rem;
+}
+.suggestions button:hover { background: var(--red); color: white; }
+
+@media (max-width: 480px) {
+  .chat-panel { width: calc(100vw - 32px); right: 16px; height: 480px; }
+}
 </style>
 </head>
 <body>
@@ -86,6 +158,99 @@ footer .built { margin-top: 1rem; font-size: 0.8rem; opacity: 0.5; }
   <p style="margin-top:0.5rem;opacity:0.7">Built for the Zomi people worldwide.</p>
   <p class="built">Built with DeepSeek</p>
 </footer>
+
+<!-- Chat Widget -->
+<button class="chat-fab" id="chatFab" onclick="toggleChat()">&#9993;</button>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <div class="chat-logo">ZC</div>
+    <span>Zomi Center</span>
+  </div>
+  <div class="chat-messages" id="chatMessages"></div>
+  <div class="suggestions" id="suggestions">
+    <button onclick="sendQuick('What is Zomi Center?')">What is Zomi Center?</button>
+    <button onclick="sendQuick('What services do you offer?')">Services</button>
+    <button onclick="sendQuick('Tell me about the Zomi AI')">Zomi AI</button>
+    <button onclick="sendQuick('How can I help?')">How can I help?</button>
+  </div>
+  <div class="chat-input-area">
+    <input class="chat-input" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter') sendMessage()">
+    <button class="chat-send" onclick="sendMessage()">&#10148;</button>
+  </div>
+</div>
+
+<script>
+const responses = {
+  "what is zomi center": "Zomi Center is a nonprofit community organization built by Zomi people for Zomi people. We provide burial support, community care, and language preservation — without being tied to any church or political group. Our motto: 'You belong here regardless.'",
+  "services": "We offer three main services:\n\n1. Burial Support — dignified funeral assistance with no membership requirements.\n2. Community Care — connect with Zomi people in your city for translation, legal aid, housing, and daily needs.\n3. Language & Culture — access the Zomi AI model, Bible datasets, and educational materials.",
+  "burial": "Our burial support program helps Zomi families cover funeral costs and arrangements. No church membership required. No strings attached. Contact us at hello@zomicenter.org for assistance.",
+  "ai": "We built the world's first Zomi language AI! It's a Qwen 3B model fine-tuned on Tedim Bible texts, Zolai Sinna educational books, and conversational Zomi. It speaks proper Tedim Zomi, not mixed dialects. 97 downloads on Hugging Face so far.\n\nYou can find it at: huggingface.co/paumkim",
+  "zomi ai": "We built the world's first Zomi language AI! It's a Qwen 3B model fine-tuned on Tedim Bible texts, Zolai Sinna educational books, and conversational Zomi. It speaks proper Tedim Zomi, not mixed dialects. 97 downloads on Hugging Face so far.\n\nYou can find it at: huggingface.co/paumkim",
+  "help": "There are several ways to help:\n\n1. Spread the word about Zomi Center to your community.\n2. Volunteer to help other Zomi families in your city.\n3. Donate to support the burial fund.\n4. Use and share the Zomi AI model.\n\nEmail us at hello@zomicenter.org to get involved.",
+  "contact": "You can reach us at hello@zomicenter.org. We're building this one city at a time and would love to hear from you.",
+  "mission": "Our mission is to make sure no Zomi family carries the burden of burial costs, cultural isolation, or language loss alone. We serve the Zomi community worldwide — regardless of church affiliation, political views, or background.",
+  "hello": "Hello! Welcome to Zomi Center. How can I help you today?",
+  "hi": "Hi there! Welcome to Zomi Center. How can I help you today?",
+  "belong": "'You belong here regardless' is our core belief. No matter who you are, where you're from, or what you believe — you have a place here.",
+  "language": "We're preserving the Zomi language through our AI model. It's a Qwen 3B model fine-tuned on Tedim Bible texts, Zolai Sinna educational books, and conversational Zomi. You can download it for free on Hugging Face.",
+};
+
+function toggleChat() {
+  const panel = document.getElementById('chatPanel');
+  const fab = document.getElementById('chatFab');
+  panel.classList.toggle('open');
+  fab.classList.toggle('open');
+  if (panel.classList.contains('open')) {
+    document.getElementById('chatInput').focus();
+    if (!document.getElementById('chatMessages').hasChildNodes()) {
+      addBotMsg("Hello! Welcome to Zomi Center. I'm here to help you learn about our community, services, and Zomi AI. What would you like to know?");
+    }
+  }
+}
+
+function addBotMsg(text) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addUserMsg(text) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg user';
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function findResponse(input) {
+  const lower = input.toLowerCase().trim();
+  for (const [key, val] of Object.entries(responses)) {
+    if (lower.includes(key)) return val;
+  }
+  return "Thank you for your message! I'm still learning. For specific questions, please email hello@zomicenter.org and someone will get back to you.\n\nYou can also try asking about: our mission, services, burial support, the Zomi AI, or how to help.";
+}
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  addUserMsg(text);
+  input.value = '';
+  document.getElementById('suggestions').style.display = 'none';
+  setTimeout(() => addBotMsg(findResponse(text)), 400);
+}
+
+function sendQuick(text) {
+  addUserMsg(text);
+  document.getElementById('suggestions').style.display = 'none';
+  setTimeout(() => addBotMsg(findResponse(text)), 300);
+}
+</script>
 
 </body>
 </html>
