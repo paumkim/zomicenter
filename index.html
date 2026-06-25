@@ -256,11 +256,17 @@ let pendingListings = [];
 function findResponse(input) {
   const lower = input.toLowerCase().trim();
 
+  // Detect match claim — someone wants to claim the mug offer
+  if (/\b(i can|i want|claim|take it|help with)\b/.test(lower) && /\b(mug|offer|listed|board)\b/.test(lower)) {
+    console.log('Match claim:', input);
+    return "Thank you! To be connected with the person who posted this, please email hello@zomicenter.org with your name and which listing you're responding to. I'll connect you both.";
+  }
+
   // Detect donation offers
   if (/\b(give|donate|have a|have an|offering|extra)\b/.test(lower) && /\b(mug|chair|table|bed|clothes|shirt|pants|shoes|book|rice|cook|pan|plate|cup|blanket|toy|furniture|kitchen|electronics|lamp|bag|jacket)\b/.test(lower)) {
     pendingListings.push({ type: 'offer', message: input, time: new Date().toISOString() });
     console.log('New offer:', input);
-    return "Thank you for offering to give! Your offer has been noted and will be reviewed. Once approved, it will appear on the Community Board.\n\nIf you'd like to speed things up, email hello@zomicenter.org with your item and contact info.";
+    return "Thank you for offering to give! Your offer has been noted and will be reviewed. Once approved, it will appear on the Community Board.\n\nWhen someone claims it, I'll ask them to email hello@zomicenter.org so we can connect you both. No personal info shared without consent.";
   }
 
   // Detect needs/requests
