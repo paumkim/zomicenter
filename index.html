@@ -18,6 +18,13 @@ nav a:hover { color: var(--gold); }
 .hero .tagline { font-size: 1.5rem; color: var(--gold); margin-top: 1.5rem; font-style: italic; }
 section { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
 section h2 { color: var(--red); margin-bottom: 1.5rem; font-size: 1.8rem; }
+.board-entry { background: white; padding: 1.2rem 1.5rem; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.board-entry .type { font-weight: 600; padding: 2px 10px; border-radius: 12px; font-size: 0.8rem; }
+.board-entry .offer { background: #e8f5e9; color: #2e7d32; }
+.board-entry .need { background: #fce4ec; color: #c62828; }
+.board-entry .status { font-size: 0.8rem; color: #999; }
+.board-empty { text-align: center; padding: 3rem; color: #999; font-style: italic; }
+.subtitle { font-size: 0.95rem; color: #666; margin-bottom: 1.5rem; }
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; }
 .card { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 .card h3 { color: var(--red); margin-bottom: 0.5rem; }
@@ -144,6 +151,15 @@ footer .built { margin-top: 1rem; font-size: 0.8rem; opacity: 0.5; }
   <p>We built the world's first Zomi language AI — a Qwen 3B model fine-tuned on Tedim Bible texts, educational books, and conversational Zomi. It speaks proper Zomi, not mixed dialects.</p>
   <p>97 downloads on Hugging Face and growing. Free for any Zomi person to use.</p>
   <p style="margin-top:1rem"><a href="https://huggingface.co/paumkim" style="color:var(--red)">View on Hugging Face →</a></p>
+</section>
+
+<section id="board">
+  <h2>Community Board</h2>
+  <p class="subtitle">Needs and offers shared by the Zomi community. Every listing is reviewed before posting. No money involved — just direct giving.</p>
+  <p style="font-size:0.85rem;color:#999;margin-bottom:1.5rem">To list something, message the chat and we'll review it.</p>
+  <div id="boardList">
+    <div class="board-empty">No listings yet. Be the first to give or ask.</div>
+  </div>
 </section>
 
 <section id="contact">
